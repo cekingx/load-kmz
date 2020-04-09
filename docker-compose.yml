@@ -1,0 +1,35 @@
+version: "3"
+services:
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lk-app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - load-kmz-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: lk-server
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - load-kmz-network
+
+#Docker Networks
+networks:
+  load-kmz-network:
+    driver: bridge
