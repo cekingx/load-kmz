@@ -39,7 +39,7 @@ services:
       - "traefik.http.routers.load-kmz-secure.rule=Host(`load-kmz.cekingx.xyz`)"
       - "traefik.http.routers.load-kmz-secure.tls=true"
       - "traefik.http.routers.load-kmz-secure.tls.certresolver=http"
-      - "traefik.http.routers.load-kmz-secure.service=lk-server"
+      - "traefik.http.routers.load-kmz-secure.service=load-kmz"
       - "traefik.http.services.load-kmz.loadbalancer.server.port=9001"
       - "traefik.docker.network=proxy"
 
