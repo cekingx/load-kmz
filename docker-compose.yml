@@ -15,7 +15,7 @@ services:
       - load-kmz-network
 
   #Nginx Service
-  webserver:
+  lk-server:
     image: nginx:alpine
     container_name: lk-server
     restart: unless-stopped
