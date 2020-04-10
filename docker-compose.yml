@@ -20,16 +20,32 @@ services:
     container_name: lk-server
     restart: unless-stopped
     tty: true
-    ports:
-      - "80:80"
-      - "443:443"
+    # ports:
+    #   - "80:80"
+    #   - "443:443"
     volumes:
       - ./:/var/www
       - ./nginx/:/etc/nginx/conf.d/
     networks:
       - load-kmz-network
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.entrypoints=http"
+      - "traefik.http.routers.portainer.rule=Host(`load-kmz.cekingx.xyz`)"
+      - "traefik.http.middlewares.portainer-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.portainer.middlewares=portainer-https-redirect"
+      - "traefik.http.routers.portainer-secure.entrypoints=https"
+      - "traefik.http.routers.portainer-secure.rule=Host(`load-kmz.cekingx.xyz`)"
+      - "traefik.http.routers.portainer-secure.tls=true"
+      - "traefik.http.routers.portainer-secure.tls.certresolver=http"
+      - "traefik.http.routers.portainer-secure.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9001"
+      - "traefik.docker.network=proxy"
 
 #Docker Networks
 networks:
   load-kmz-network:
     driver: bridge
+  proxy:
+    external: true
