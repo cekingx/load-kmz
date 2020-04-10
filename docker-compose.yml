@@ -31,16 +31,16 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.entrypoints=http"
-      - "traefik.http.routers.portainer.rule=Host(`load-kmz.cekingx.xyz`)"
-      - "traefik.http.middlewares.portainer-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.portainer.middlewares=portainer-https-redirect"
-      - "traefik.http.routers.portainer-secure.entrypoints=https"
-      - "traefik.http.routers.portainer-secure.rule=Host(`load-kmz.cekingx.xyz`)"
-      - "traefik.http.routers.portainer-secure.tls=true"
-      - "traefik.http.routers.portainer-secure.tls.certresolver=http"
-      - "traefik.http.routers.portainer-secure.service=portainer"
-      - "traefik.http.services.portainer.loadbalancer.server.port=9001"
+      - "traefik.http.routers.load-kmz.entrypoints=http"
+      - "traefik.http.routers.load-kmz.rule=Host(`load-kmz.cekingx.xyz`)"
+      - "traefik.http.middlewares.load-kmz-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.load-kmz.middlewares=load-kmz-https-redirect"
+      - "traefik.http.routers.load-kmz-secure.entrypoints=https"
+      - "traefik.http.routers.load-kmz-secure.rule=Host(`load-kmz.cekingx.xyz`)"
+      - "traefik.http.routers.load-kmz-secure.tls=true"
+      - "traefik.http.routers.load-kmz-secure.tls.certresolver=http"
+      - "traefik.http.routers.load-kmz-secure.service=lk-server"
+      - "traefik.http.services.load-kmz.loadbalancer.server.port=9001"
       - "traefik.docker.network=proxy"
 
 #Docker Networks
