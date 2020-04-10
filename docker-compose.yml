@@ -13,6 +13,21 @@ services:
       - ./:/var/www
     networks:
       - proxy
+
+  # Nginx Service
+  lk-server:
+    image: nginx:alpine
+    container_name: lk-server
+    restart: unless-stopped
+    tty: true
+    # ports:
+    #   - "80:80"
+    #   - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - proxy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.load-kmz.entrypoints=http"
@@ -24,24 +39,8 @@ services:
       - "traefik.http.routers.load-kmz-secure.tls=true"
       - "traefik.http.routers.load-kmz-secure.tls.certresolver=http"
       - "traefik.http.routers.load-kmz-secure.service=load-kmz"
-      - "traefik.http.services.load-kmz.loadbalancer.server.port=9001"
+      - "traefik.http.services.load-kmz.loadbalancer.server.port=80"
       - "traefik.docker.network=proxy"
-
-  #Nginx Service
-  # lk-server:
-  #   image: nginx:alpine
-  #   container_name: lk-server
-  #   restart: unless-stopped
-  #   tty: true
-  #   # ports:
-  #   #   - "80:80"
-  #   #   - "443:443"
-  #   volumes:
-  #     - ./:/var/www
-  #     - ./nginx/:/etc/nginx/conf.d/
-  #   networks:
-  #     - load-kmz-network
-  #     - proxy
 
 #Docker Networks
 networks:
